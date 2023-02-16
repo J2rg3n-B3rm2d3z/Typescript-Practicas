@@ -1,0 +1,130 @@
+Requisitos
+	-> NodeJS
+	-> VSCode - Visual Studio Code
+	-> Google Chrome
+
+Opcional
+	-> Avtivitus Bar - Pluggin
+	-> TypeScript importer - Pluggin
+	-> Json Viewer Awesome -Extensiones de Chrome
+	-> Bracket Pair Colorizer 2 - Pluggin
+	-> Tokyo Night - Tema de Visual Studio Code
+	-> Material Icon Theme - Temas de iconos en Visual Studio Code
+
+Intalacion de TypeScript
+	Usando el comando 'npm install -g typescript' se instala typescript
+
+	Lo siguiente es la linea de comando que se utilizaron al momento de insatalar typescript
+
+	C:\Users\Jurgen>npm install -g typescript
+
+	added 1 package, and audited 2 packages in 5s
+
+	found 0 vulnerabilities
+	npm notice
+	npm notice New major version of npm available! 8.19.3 -> 9.3.1
+	npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.3.1
+	npm notice Run npm install -g npm@9.3.1 to update!
+	npm notice
+
+	C:\Users\Jurgen>npm install -g npm@9.3.1
+
+	added 1 package, and audited 231 packages in 10s
+
+	14 packages are looking for funding
+	  run `npm fund` for details
+
+	found 0 vulnerabilities
+
+	C:\Users\Jurgen>npm fund
+	Jurgen
+
+
+	C:\Users\Jurgen>tsc -v
+	Version 4.9.4
+
+	C:\Users\Jurgen>
+
+		- Observaciones, en el caso de que no se reconozca en el powershell el prefijo npm y el tsc, en mi caso al menos es debido a que la instalacion se realizo en un disco externo al mio,
+		- Otra observacion, puede que al momento de ejecutar un comando tsc, de error, algo como que esta restringido o desabilitado la ejecucion de script en el sistema, esto se resuelve abriendo el powershell como administrador, y ejecutando el siguiente codigo
+
+	PS C:\Windows\system32> get-ExecutionPolicy
+	Restricted
+	PS C:\Windows\system32> set-ExecutionPolicy help
+	Set-ExecutionPolicy : Cannot bind parameter 'ExecutionPolicy'. Cannot convert value "help" to type
+	"Microsoft.PowerShell.ExecutionPolicy". Error: "Unable to match the identifier name help to a valid enumerator name.
+	Specify one of the following enumerator names and try again:
+	Unrestricted, RemoteSigned, AllSigned, Restricted, Default, Bypass, Undefined"
+	At line:1 char:21
+	+ set-ExecutionPolicy help
+	+                     ~~~~
+		+ CategoryInfo          : InvalidArgument: (:) [Set-ExecutionPolicy], ParameterBindingException
+		+ FullyQualifiedErrorId : CannotConvertArgumentNoMessage,Microsoft.PowerShell.Commands.SetExecutionPolicyCommand
+
+	PS C:\Windows\system32> set-ExecutionPolicy RemoteSigned
+
+	Execution Policy Change
+	The execution policy helps protect you from scripts that you do not trust. Changing the execution policy might expose
+	you to the security risks described in the about_Execution_Policies help topic at
+	https:/go.microsoft.com/fwlink/?LinkID=135170. Do you want to change the execution policy?
+	[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N"): Y
+	PS C:\Windows\system32>
+
+
+tsc -w -> te refresca el archivo java con los cambios que se hace en el archivo tipescript
+
+
+Tipos de datos en typescript
+
+
+	Primitivos 
+		String
+		Number
+		Boolean
+		Symbol
+
+	Compuestos 
+		Objetos literales
+		Funciones
+		Clases
+		Arreglos
+
+Ejemplo de funcion anonima autoinvocada
+
+(() => {
+
+    const a:number = 15;
+
+    console.log(a)
+
+})()
+
+Al momento de usar tipescript usar el tsc init, para crear las configuracion de restrinccion de typescript, para posteriormente modificarla
+en la linea de codigo del json donde esta comentado -"sourceMap": true,-, descomentarlo para que de esa manera crear un mapa de coneccion con
+el archivo java y typescript y de esa manera, al momento de compilarlo muestre las lineas del codigo del typescript en vez de la de javascript,
+y de ese modo trabajar directamente con el archivo typescript, ojo que esto agregara un nuevo archivo .map para cada archivo .ts, ya con esto se 
+puede agregar lo breakpoint y las herrammientas de desarrollador del navegador
+
+Nota: los sourcemap normalmente se utiliza en el periodo de desarrollo, no en el produccion, ya que al final el navegador trabaja con el archivo javascript
+creado por medio de typescript no contypescript como tal
+
+"removeComments": true,    -> remueve los comentarios de los archivos de javascript
+
+Al final del archivo de configuracion de typescript,
+tsconfig.json
+al agregar las siguientes lineas de tal forma como:
+},
+  "exclude": [
+    "directorio_pormedio_del_comando_regex",
+	"otro_directorio_pormedio_del_comando_regex"
+  ],
+  "include": [
+    "ES6"
+  ]
+
+}
+
+En el directorio o archivo que se señala entre comillas del exclude, typescript no generara el archivo javascript, y en este caso como se configuro para crear el mapsource
+este tampoco se generarara
+
+En el caso del include, es lo contrario de exclude, ahi solo se transpila los archivos o la carpeta indicada, mientras que los otros se ignoran.
